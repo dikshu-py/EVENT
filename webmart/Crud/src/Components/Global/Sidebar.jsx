@@ -6,12 +6,12 @@ const Sidebar = () => {
   const [active, setActive] = useState("");
 
   const content = {
-    "Recruitment": ["Candidates"],
-    "Organization": ["Employees", "Attendence", "Leaves" , "Discussion"],
+    "Recruitment": ["Expenses"],
+    "Organization": ["Employees", "Attendence", "Leaves" ],
     "Others": ["Logout"],
   }
   const icons = {
-    "Candidates": <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    "Expenses": <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M2.5 9.16659H6.66667M4.58333 11.2499V7.08325M12.0833 11.6666C15.0903 11.6666 16.6951 12.6733 17.2609 14.6867C17.5598 15.75 16.6046 16.6666 15.5 16.6666H8.66666C7.56209 16.6666 6.60687 15.75 6.90573 14.6867C7.47159 12.6733 9.07637 11.6666 12.0833 11.6666ZM12.0833 8.33325C13.4722 8.33325 14.1667 7.61897 14.1667 5.83325C14.1667 4.04754 13.4722 3.33325 12.0833 3.33325C10.6944 3.33325 10 4.04754 10 5.83325C10 7.61897 10.6944 8.33325 12.0833 8.33325Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
     ,
@@ -56,18 +56,19 @@ const Sidebar = () => {
     }
   }
   return (
-    <div className="w-[280px]  text-white  space-y-4 border-r-[1px] border-[#D6D6D6] transition-all ease-in-out duration-400">
+    <div className="w-[64px] lg:w-[280px]   text-white space-y-4 border-r border-[#D6D6D6] transition-all ease-in-out duration-300">
+
 
       {Object.entries(content).map(([section, items], index) => (
         <div key={index} className='mt-10'>
-          <h2 className="font-bold text-sm text-[#A4A4A4] uppercase mb-2 mx-4">{section}</h2>
+          <h2 className="font-bold hidden lg:block text-sm text-[#A4A4A4] uppercase mb-2 mx-4">{section}</h2>
           <ul className="mt-[16px]">
             {items.map((item, i) => (
               <li key={i} onClick={() => handleClick(item)} className={`${active === item ? "bg-[#F9FAFB]" : ""} relative px-5 py-2 font-semibold    rounded cursor-pointer text-[#4D007D]`}>
                   <div className={`${active === item? "block":"hidden"} absolute -left-1 h-7 w-2 rounded-xl bg-[#6E11B0]`}></div>
                 <div className="flex items-center gap-4">
                   {icons[item]}
-                  <p>{item}</p>
+                  <p className="hidden lg:block">{item}</p>
                 </div>
               </li>
             ))}

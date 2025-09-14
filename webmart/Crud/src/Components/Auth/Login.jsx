@@ -39,10 +39,11 @@ const Login = () => {
             id: cache._id,
             name: cache.name,
             email: cache.email,
+            token : cache.token
           });
           localStorage.setItem('token', res.data.data.token)
-          dispatch(setUser({ id: cache._id, name: cache.name, email: cache.email }));
-          console.log("ajhdjasdhasj")
+          dispatch(setUser({ id: cache._id, name: cache.name, email: cache.email , token : cache.token }));
+          
           navigate("/")
         }
       }

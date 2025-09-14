@@ -8,13 +8,8 @@ const http = require('http'); // ✅ Import http
 const { Server } = require('socket.io'); // ✅ Import socket.io
 
 // Routes
-const productRoutes = require('./Routes/productRoutes');
 const authRoutes = require('./Routes/LoginRoutes');
-const uploadRoutes = require('./Routes/uploadRoutes');
-const employeeRoute = require('./Routes/EmployeeRoutes');
-const AttendenceRoutes = require('./Routes/AttendenceRoutes');
-const LeaveRoutes = require('./Routes/LeavesRoutes');
-const MessageRoutes = require('./Routes/messageRotes');
+const expRoutes = require('./Routes/ExpenseRoutes');
 
 const app = express();
 const server = http.createServer(app); // ✅ wrap express app
@@ -66,12 +61,7 @@ app.use(express.static(path.join(__dirname, 'uploads')));
 
 // ✅ Routes
 app.use('/', authRoutes);
-app.use('/', uploadRoutes);
-app.use('/', productRoutes);
-app.use('/', employeeRoute);
-app.use('/', AttendenceRoutes);
-app.use('/', LeaveRoutes);
-app.use('/', MessageRoutes);
+app.use('/', expRoutes);
 
 // ✅ Socket.IO logic
 io.on('connection', (socket) => {

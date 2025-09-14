@@ -5,14 +5,8 @@ import PrivateRoutes from './Components/PRotectedRoute';
 // Lazy loaded components
 const Login = lazy(() => import('./Components/Auth/Login'));
 const Register = lazy(() => import('./Components/Auth/Register'));
-const Table = lazy(() => import('./Components/Table'));
+const Expense = lazy(() => import('./Components/SidebarComponent/Expense'));
 const Formdata = lazy(() => import('./Components/FormData'));
-const View = lazy(() => import('./Components/FormData/view'));
-const Leaves = lazy(() => import('./Components/SidebarComponent/Leaves'));
-const Attendence = lazy(() => import('./Components/SidebarComponent/Attendence'));
-const Employee = lazy(() => import('./Components/SidebarComponent/Employees'));
-const Discussion = lazy(() => import('./Components/SidebarComponent/Discussion/index.jsx'));
-const Profile = lazy(() => import('./Components/Auth/profile.jsx'));
 
 function App() {
   return (
@@ -25,16 +19,9 @@ function App() {
 
           {/* Protected Routes */}
           <Route element={<PrivateRoutes />}>
-            <Route path="/" element={<Table />} />
-            <Route path="/add-product" element={<Formdata />} />
-            <Route path="/detail/:id" element={<View />} />
-            <Route path="/edit/:id" element={<Formdata />} />
-            <Route path="/leaves" element={<Leaves />} />
-            <Route path="/attendence" element={<Attendence />} />
-            <Route path="/employees" element={<Employee />} />
-            <Route path="/discussion" element={<Discussion />} />
-            <Route path="/discussion/:id" element={<Discussion />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/" element={< Expense/>} />
+            <Route path="/expenses" element={< Expense/>} />
+            
           </Route>
         </Routes>
       </Suspense>

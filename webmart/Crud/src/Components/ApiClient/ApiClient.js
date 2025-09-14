@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {store} from '../Store/store';
 
 
 const url = import.meta.env.VITE_APP_BASE_URL
@@ -13,6 +14,8 @@ const ApiClient = axios.create({
 // Request interceptor to add token from localStorage
 ApiClient.interceptors.request.use(config => {
   const token = localStorage.getItem('token');
+  
+  
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
