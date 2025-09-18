@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import ApiClient from '../../ApiClient/ApiClient';
 import BarChart from './Barchart';
+import CSVImporter from './Addexpense';
 
 
 
@@ -18,16 +19,28 @@ const icon = 'https://media.gettyimages.com/id/1468746784/vector/shopping-cart-i
 const index = () => {
 
     const [transactions, setTransactions] = useState([])
+    const [showModal, setShowModal] = useState(false);
+
+
     useEffect(() => {
         getExpenses()
-    }, [])
+    }, [showModal])
 
+
+
+    // to get all Expenses List
+    // to get all Expenses List
     const getExpenses = async () => {
-        const res = await ApiClient.get("/getallexpense")
-        setTransactions(res.data.data)
-        console.log(res.data.data)
-        Object.entries(res.data.data).map(([item, i]) => console.log(item, i))
-    }
+        try {
+            const res = await ApiClient.get("/getallexpense");
+            setTransactions(res.data.data);
+            console.log("Expenses:", res.data.data);
+
+            
+        } catch (err) {
+            console.error("Error fetching expenses:", err);
+        }
+    };
 
     //to get the Date Data in Desired Format
     const getFormatedDate = (date) => {
@@ -54,19 +67,15 @@ const index = () => {
                         {[1, 2, 3].map((_, i) => (
                             <div key={i} className="w-8 h-8 bg-gray-300 rounded-full border-2 border-white -ml-2" />
                         ))}
-                        <button onClick={() => getExpenses()} className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold">+ </button>
+                        <button onClick={() => setShowModal(true)} className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold">+ </button>
                     </div>
+
                 </div>
-                {/* Chart Bars (Mocked) */}
-                {/* <div className="flex items-end gap-[2px] h-[60px] sm:h-[80px] mt-6 mb-4">
-            {Array.from({ length: 24 }).map((_, i) => (
-              <div
-                key={i}
-                className={`w-1 rounded-sm ${i === 20 ? "bg-blue-500 h-[48px] sm:h-[64px]" : "bg-blue-200 h-" + (Math.floor(Math.random() * 32) + 16)}`}
-              />
-            ))}
-          </div> */}
+
                 <BarChart data={transactions} />
+
+
+
                 {/* Transaction List */}
                 <div className='flex-1 overflow-y-auto mt-4'>
                     {transactions && Object.entries(transactions).map(([date, section]) => (
@@ -78,16 +87,14 @@ const index = () => {
                                     <div key={j} className="flex items-start justify-between ">
 
                                         <div className="flex items-start gap-4">
-                                            {/* <div className={`w-10 h-10 ${item.color} rounded-full flex items-center justify-center text-white text-lg`}>
-                        {item.icon}
-                      </div> */}
+
                                             <img src={icon} className="w-10 h-10 rounded-full" />
                                             <div>
-                                                <p className="font-semibold text-[#273240] md:text-xl  text-base">{item.title}</p>
+                                                <p className="font-semibold text-[#273240] md:text-xl  text-base">{item.category}</p>
                                                 <p className="text-xs sm:text-sm text-[#273240] break-words">{item.check}  •  {item.description}</p>
                                             </div>
                                         </div>
-                                        <p className={`font-bold ${item.check === 'Send' ? "text-[#273240]" : "text-[#273240]"} text-sm md:text-lg `} >{item.check === 'Send' ? "+" : "-"}    {item.amount}</p>
+                                        <p className={`font-bold ${item.check === 'Send' ? "text-[#273240]" : "text-[#273240]"} text-sm md:text-lg `} >{item.amount !== 0 ? (item.check === 'Send' ? '-' : '+') : ''}   {item.amount}</p>
 
                                     </div>
                                 ))}
@@ -134,7 +141,9 @@ const index = () => {
                     </button>
                 </div>
             </div>
-
+            {
+                showModal && <CSVImporter isOpen={showModal} onClose={() => setShowModal(false)} />
+            }
         </div>
     )
 }

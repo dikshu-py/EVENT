@@ -4,11 +4,11 @@ const SubCategory = require('../Models/subCategory');
 
 exports.addExpense = async (req, res) => {
     try {
-        const { title, amount, category, subcategory, check, description } = req.body;
+        const {  amount, category, subcategory, check, description } = req.body;
 
         // Save to DB (await required)
         const newExpense = await expense.create({
-            title,
+          
             amount,
             category,
             subcategory,
@@ -17,11 +17,7 @@ exports.addExpense = async (req, res) => {
 
         });
 
-        // if(subcategory != ''){
-        //     await SubCategory.findByIdAndUpdate(subcategory, { $inc: { total: amount } },{new:true})
-        // }
-
-        // Success response
+        
         res.status(201).json({
             success: true,
             message: 'Expense added successfully',
@@ -29,7 +25,7 @@ exports.addExpense = async (req, res) => {
         });
 
     } catch (err) {
-        console.error('Error adding expense:', err.message);
+       
         res.status(400).json({
             success: false,
             message: `Error in Adding Expense: ${err.message}`

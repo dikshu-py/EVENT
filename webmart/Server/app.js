@@ -10,6 +10,8 @@ const { Server } = require('socket.io'); // ✅ Import socket.io
 // Routes
 const authRoutes = require('./Routes/LoginRoutes');
 const expRoutes = require('./Routes/ExpenseRoutes');
+const activityRoutes = require('./Routes/activityRoute');
+const taskRoutes = require('./Routes/TaskRoutes');
 
 const app = express();
 const server = http.createServer(app); // ✅ wrap express app
@@ -62,6 +64,8 @@ app.use(express.static(path.join(__dirname, 'uploads')));
 // ✅ Routes
 app.use('/', authRoutes);
 app.use('/', expRoutes);
+app.use('/', activityRoutes);
+app.use('/', taskRoutes);
 
 // ✅ Socket.IO logic
 io.on('connection', (socket) => {

@@ -6,7 +6,7 @@ import PrivateRoutes from './Components/PRotectedRoute';
 const Login = lazy(() => import('./Components/Auth/Login'));
 const Register = lazy(() => import('./Components/Auth/Register'));
 const Expense = lazy(() => import('./Components/SidebarComponent/Expense'));
-const Formdata = lazy(() => import('./Components/FormData'));
+const Activity = lazy(() => import('./Components/SidebarComponent/Activity'));
 
 function App() {
   return (
@@ -20,6 +20,8 @@ function App() {
           {/* Protected Routes */}
           <Route element={<PrivateRoutes />}>
             <Route path="/" element={< Expense/>} />
+            <Route path="/expenses" element={< Expense/>} />
+            <Route path="/activity" element={< Activity/>} />
             <Route path="/expenses" element={< Expense/>} />
             
           </Route>

@@ -9,15 +9,15 @@ const StatusDropdown = ({ option, handlefilter ,command}) => {
     setIsOpen(false);
 
     // 🔁 Mimic onChange behavior like a <select>
-    handlefilter(command, { target: { value: status.value }});
+    handlefilter(status.value);
   };
 
   return (
-    <div className="relative inline-block text-left">
-      <div>
+    <div className="relative inline-block text-left w-full">
+      <div className='w-full'>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="inline-flex justify-between w-40 rounded-full border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+          className="inline-flex justify-between w-full rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
         >
           {selectedStatus}
           <svg
@@ -33,7 +33,7 @@ const StatusDropdown = ({ option, handlefilter ,command}) => {
       </div>
 
       {isOpen && (
-        <div className="absolute z-10 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="absolute z-10 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-[#ABABAB] ring-opacity-5">
           <div className="py-1">
             {option.map((status) => (
               <button
