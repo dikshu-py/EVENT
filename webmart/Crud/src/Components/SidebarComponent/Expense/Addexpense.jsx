@@ -9,9 +9,10 @@ const CategoryOption = [
     { label: "Grocery", value: "Grocery" },
     { label: "Rent", value: "Rent" },
     { label: "Shopping", value: "Shopping" },
-
+    { label: "Transport", value: "Transport" },
     { label: "Food", value: "Food" },
     { label: "Friend", value: "Friend" },
+    
 
 ]
 const subCategoryOption = [

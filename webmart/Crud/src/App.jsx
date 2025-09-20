@@ -7,6 +7,8 @@ const Login = lazy(() => import('./Components/Auth/Login'));
 const Register = lazy(() => import('./Components/Auth/Register'));
 const Expense = lazy(() => import('./Components/SidebarComponent/Expense'));
 const Activity = lazy(() => import('./Components/SidebarComponent/Activity'));
+const Task = lazy(() => import('./Components/SidebarComponent/Tasks'));
+
 
 function App() {
   return (
@@ -22,7 +24,8 @@ function App() {
             <Route path="/" element={< Expense/>} />
             <Route path="/expenses" element={< Expense/>} />
             <Route path="/activity" element={< Activity/>} />
-            <Route path="/expenses" element={< Expense/>} />
+            <Route path="/tasks" element={< Task/>} />
+           
             
           </Route>
         </Routes>

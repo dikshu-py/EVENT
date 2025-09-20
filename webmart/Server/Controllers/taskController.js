@@ -44,7 +44,7 @@ exports.getTask = async (req, res) => {
             success: true,
             message: 'Activity Data Fetch successfully',
             count: tasks.length,
-            data: grouped
+            data: tasks
         });
 
 

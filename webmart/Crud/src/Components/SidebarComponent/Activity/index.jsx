@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import AddTask from './AddActivity'
+import ApiClient from '../../ApiClient/ApiClient';
+import getFormatedDate from '../../Global/FormatedDate';
+import GroceryCard from './card';
 
 
 
@@ -9,11 +12,24 @@ import AddTask from './AddActivity'
 const index = () => {
     const [showModal, setShowModal] = useState(false);
     const today = new Date().toString()
+    const [tasks, setTask] = useState([])
 
-    useEffect(()=>{
+    useEffect(() => {
         getActivityList();
-    },[showModal])
+    }, [showModal])
+    const getActivityList = async () => {
+        try {
+            const res = await ApiClient.get('/getactivity')
+            console.log(res.data)
+            if (res.data.success) {
+                setTask(res.data.data)
+                console.log("sucess")
+            }
 
+        } catch (err) {
+            console.log(`Error in Fething All activity list ${err}`)
+        }
+    }
 
 
     return (
@@ -41,7 +57,17 @@ const index = () => {
 
                 {/* Transaction List */}
                 <div className='flex-1 overflow-y-auto mt-4'>
-                    Hello
+                    {tasks && Object.entries(tasks).map(([date, section]) => (
+                        <div key={date} className="mt-2 ">
+
+
+
+                            {console.log(section)}
+                            <GroceryCard date={getFormatedDate(date)}  description={section[0].description} />
+
+
+                        </div>
+                    ))}
 
                 </div>
 
