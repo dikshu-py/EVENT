@@ -1,11 +1,13 @@
 import React from 'react'
 import AddTask from './AddTask';
-import {useState,useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import ApiClient from '../../ApiClient/ApiClient';
 import getFormatedDate from '../../Global/FormatedDate';
+import getdayDate from '../../Global/Daydate';
+import TaskTable from './TaskTable';
 
 const index = () => {
-   const [tasks, setTask] = useState([])
+    const [tasks, setTask] = useState([])
     const [showModal, setShowModal] = useState(false);
 
 
@@ -15,7 +17,7 @@ const index = () => {
 
 
 
-   
+
     // to get all Expenses List
     const getExpenses = async () => {
         try {
@@ -23,21 +25,21 @@ const index = () => {
             setTask(res.data.data);
             console.log("Activityy:", res.data.data);
 
-            
+
         } catch (err) {
             console.error("Error fetching expenses:", err);
         }
     };
 
     //to get the Date Data in Desired Format
-   
+
     return (
         <div className="h-screen  flex  flex-col lg:flex-row bg-[#f8f9fb] p-2 sm:p-4 md:p-6 ">
 
             {/* Left - Main Content */}
-            <div className="w-full lg:w-[70%] bg-white rounded-2xl p-8 sm:px-20 md:px-[80px] lg:px-[120px] shadow-md flex  flex-col ">
+            <div className="w-full lg:w-[70%]  rounded-2xl  shadow-b-md flex  flex-col gap-8">
                 {/* Header */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <div className="flex flex-col bg-white rounded-[30px] sm:flex-row sm:items-center sm:justify-between gap-2  p-4 sm:px-20 md:px-[80px] lg:px-[120px]">
                     <div>
                         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800">Tasks</h1>
                         <p className="text-xs sm:text-sm text-gray-500 mt-1">01 – 25 March, 2020</p>
@@ -52,35 +54,33 @@ const index = () => {
 
                 </div>
 
-                
+
 
 
 
                 {/* Transaction List */}
-                <div className='flex-1 overflow-y-auto mt-4'>
-                    {tasks && Object.entries(tasks).map(([date, section]) => (
-                        <div key={date} className="mt-6  ">
-                            <h3 className="text-xs sm:text-[18px] text-[#273240] font-bold mb-2 border-b py-2 border-[#DEDEDE]">{getFormatedDate(date)}</h3>
-                            <div className="space-y-4 mt-6 overflow-auto">
-                                {section.map((item, j) => (
-
-                                    <div key={j} className="flex items-start justify-between ">
-
-                                        <div className="flex items-start gap-4">
-
-                                            <img src='https://cdn-icons-png.flaticon.com/512/906/906334.png' className="w-10 h-10 rounded-full"  alt='logo'/>
-                                            <div>
-                                                <p className="font-semibold text-[#273240] md:text-xl  text-base">{item.title}</p>
-                                                <p className="text-xs sm:text-sm text-[#273240] break-words">{item.status}  •  {item.description}</p>
-                                            </div>
-                                        </div>
-                                        <p className={`font-bold ${item.check === 'Send' ? "text-[#273240]" : "text-[#273240]"} text-sm md:text-lg `} >{item.amount !== 0 ? (item.check === 'Send' ? '-' : '+') : ''}   {item.amount}</p>
-
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
+                <div className='flex-1 overflow-y-auto bg-white rounded-[30px] '>
+                    {/* 
+{tasks && Object.values(tasks).map((item) => (
+    <div key={item._id} className="mt-6">
+        <h3 className="text-xs sm:text-[18px] text-[#273240] font-bold mb-2 border-b py-2 border-[#DEDEDE]">{getFormatedDate(date)}</h3>
+        <div className="space-y-4 mt-6 overflow-auto">
+            {console.log(item)}
+            <div key={item._id} className="flex items-start justify-between">
+                <div className="flex items-start gap-4">
+                    <img src='https://cdn-icons-png.flaticon.com/512/906/906334.png' className="w-10 h-10 rounded-full" alt='logo' />
+                    <div>
+                        <p className="font-semibold text-[#273240] md:text-xl text-base">{item.title}</p>
+                        <p className="text-xs sm:text-sm text-[#273240] break-words">{item.status}  •  {item.description}</p>
+                    </div>
+                </div>
+                <p>{getdayDate(getFormatedDate(item.createdAt))}</p>
+            </div>
+        </div>
+    </div>
+))} 
+*/}
+                 <TaskTable />
 
                 </div>
 
@@ -92,8 +92,8 @@ const index = () => {
                 {/* Spending Summary */}
                 <div className=" p-4 sm:p-8 ">
                     <h3 className="text-base sm:text-lg lg:text-xl font-bold text-[#273240]  mb-4">Where your money go?</h3>
-                    
-                   
+
+
                 </div>
                 {/* Tip Card */}
                 <div className="bg-[#F9FAFC]  p-4 sm:p-6  text-center">
@@ -110,6 +110,7 @@ const index = () => {
             {
                 showModal && <AddTask isOpen={showModal} onClose={() => setShowModal(false)} />
             }
+           
         </div>
     )
 }

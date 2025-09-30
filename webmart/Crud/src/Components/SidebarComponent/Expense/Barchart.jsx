@@ -16,12 +16,12 @@ const BarChart = ({ data }) => {
   
 
   // Step 2: Get maxAmount (avoid divide-by-zero)
-  const maxAmount = Math.max(...dailyTotals.map((item) => Math.abs(item.total)), 1);
+  const maxAmount = Math.max(...dailyTotals.map((item) => Math.abs(item.total)), 1) ;
 
   return (
     <div className="flex items-end gap-1 h-40 ">
       {dailyTotals.map(({ date, total }) => {
-        const heightPercent = Math.max((Math.abs(total) / maxAmount) * 100, 5); // min 5%
+        const heightPercent = Math.max((Math.abs(total) / maxAmount  ) * 100, 5); // min 5%
 
         return (
           <div key={date} className="flex flex-col justify-end items-center h-full w-6">

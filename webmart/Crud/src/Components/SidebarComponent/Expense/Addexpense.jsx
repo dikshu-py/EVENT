@@ -116,7 +116,7 @@ export default function CSVImporter({ onClose }) {
                                 : 'bg-gray-300 text-white cursor-not-allowed'
                             }`}
                     >
-                        Create Table
+                        Add
                     </button>
                 </div>
             </div>
