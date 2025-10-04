@@ -5,5 +5,5 @@ const expController  = require('../Controllers/expenseController');
 router.post('/addexpense',expController.addExpense )
 
 router.get('/getallexpense',expController.getAllExpense )
-router.get('/getallexpensebysubcat',expController.getAllbysubCat )
+router.get('/getallexpensebyCat',expController.getexpensebycategory )
 module.exports = router;

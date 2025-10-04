@@ -6,9 +6,9 @@ const Sidebar = () => {
   const [active, setActive] = useState("");
 
   const content = {
-    "Recruitment": ["Expenses"],
-    "Organization": ["Tasks", "Learning", "Activity" ],
-    "Others": ["Logout"],
+
+    "Organization": ["Expenses", "Tasks", "Learning", "Activity"],
+
   }
   const icons = {
     "Expenses": <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,9 +33,7 @@ const Sidebar = () => {
       <path d="M8.33301 3.33325C8.33301 6.09468 6.09443 8.33325 3.33301 8.33325C6.09443 8.33325 8.33301 10.5718 8.33301 13.3333C8.33301 10.5718 10.5716 8.33325 13.333 8.33325C10.5716 8.33325 8.33301 6.09468 8.33301 3.33325Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
       <path d="M14.583 12.4999C14.583 13.6505 13.6503 14.5833 12.4997 14.5833C13.6503 14.5833 14.583 15.516 14.583 16.6666C14.583 15.516 15.5157 14.5833 16.6663 14.5833C15.5157 14.5833 14.583 13.6505 14.583 12.4999Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
-    , "Logout": <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M11.6663 16.6667H5.33301C4.22844 16.6667 3.33301 15.7713 3.33301 14.6667L3.33301 5.33341C3.33301 4.22884 4.22844 3.33342 5.33301 3.33342H11.6663M8.33301 10.0001H17.4997M17.4997 10.0001L14.9997 12.5001M17.4997 10.0001L14.9997 7.50008" stroke="#121212" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
+    ,
 
 
 
@@ -56,25 +54,49 @@ const Sidebar = () => {
     }
   }
   return (
-    <div className="w-[64px] lg:w-[280px]   text-white space-y-4 border-r border-[#D6D6D6] transition-all ease-in-out duration-300">
+    <div className="w-[64px] lg:w-[280px]   text-white space-y-4 border-r border-[#D6D6D6] transition-all ease-in-out duration-300 flex flex-col justify-between">
+      <div>
+        <div className='text-5xl font-medium text-black mt-8 text-center flex gap-2 px-2 lg:px-8'>
+          {<svg width="47" height="47" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18.5003 34.8876C17.4674 34.8876 16.419 34.6564 15.602 34.1784L7.12284 29.2914C3.66951 26.9634 3.45367 26.6089 3.45367 22.9551V14.0443C3.45367 10.3905 3.65409 10.0359 7.04576 7.73887L15.5865 2.80553C17.2053 1.86512 19.749 1.86512 21.3678 2.80553L29.8778 7.70803C33.3311 10.0359 33.547 10.3905 33.547 14.0443V22.9397C33.547 26.5934 33.3465 26.948 29.9549 29.2451L21.414 34.1784C20.5815 34.6564 19.5332 34.8876 18.5003 34.8876ZM18.5003 4.42428C17.8528 4.42428 17.2207 4.54762 16.7736 4.8097L8.29451 9.7122C5.78159 11.408 5.78159 11.408 5.78159 14.0443V22.9397C5.78159 25.5759 5.78159 25.5759 8.35617 27.318L16.7736 32.1743C17.6832 32.6984 19.3328 32.6984 20.2424 32.1743L28.7215 27.2718C31.219 25.5759 31.219 25.5759 31.219 22.9397V14.0443C31.219 11.408 31.219 11.408 28.6445 9.66595L20.227 4.8097C19.7799 4.54762 19.1478 4.42428 18.5003 4.42428Z" fill="black" />
+            <path d="M18.5 24.2812C15.3088 24.2812 12.7188 21.6912 12.7188 18.5C12.7188 15.3088 15.3088 12.7188 18.5 12.7188C21.6912 12.7188 24.2812 15.3088 24.2812 18.5C24.2812 21.6912 21.6912 24.2812 18.5 24.2812ZM18.5 15.0312C16.5883 15.0312 15.0312 16.5883 15.0312 18.5C15.0312 20.4117 16.5883 21.9688 18.5 21.9688C20.4117 21.9688 21.9688 20.4117 21.9688 18.5C21.9688 16.5883 20.4117 15.0312 18.5 15.0312Z" fill="black" />
+          </svg>
+          }
+          <h1 className='hidden lg:block'>Event<span className='text-[10px] text-[#ABABAB] ml-2'>V<span className='text-[16px]'>.01</span></span></h1>
+          </div>
+        {Object.entries(content).map(([section, items], index) => (
+          <div key={index} className='mt-20'>
+            {/* <h2 className="font-bold hidden lg:block text-sm text-[#A4A4A4] uppercase mb-2 mx-4">{section}</h2> */}
 
+            <div >
+              <ul className="mt-[16px]">
+                {items.map((item, i) => (
+                  <li key={i} onClick={() => handleClick(item)} className={` relative px-3 lg:px-5 py-2 font-semibold     cursor-pointer text-[#9197B3]`}>
+                    <div className={`${active === item ? "block" : "hidden"} absolute -left-1 h-9 lg:h-10 w-2 rounded-xl bg-[#87CEFA] `}></div>
+                    <div className={`flex items-center justify-center lg:justify-start   h-9 w-full lg:w-full lg:h-full gap-4 ${active === item ? "bg-[#87CEFA] text-black" : ""} rounded  lg:mt-0 lg:px-5 lg:py-2`}>
+                      {icons[item]}
+                      <p className="hidden lg:block">{item}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
 
-      {Object.entries(content).map(([section, items], index) => (
-        <div key={index} className='mt-10'>
-          <h2 className="font-bold hidden lg:block text-sm text-[#A4A4A4] uppercase mb-2 mx-4">{section}</h2>
-          <ul className="mt-[16px]">
-            {items.map((item, i) => (
-              <li key={i} onClick={() => handleClick(item)} className={`${active === item ? "bg-[#F9FAFB]" : ""} relative px-5 py-2 font-semibold    rounded cursor-pointer text-[#4D007D]`}>
-                  <div className={`${active === item? "block":"hidden"} absolute -left-1 h-7 w-2 rounded-xl bg-[#6E11B0]`}></div>
-                <div className="flex items-center gap-4">
-                  {icons[item]}
-                  <p className="hidden lg:block">{item}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+            </div>
+
+          </div>
+
+        ))}
+
+      </div>
+
+      <div className={`flex items-center gap-4 ${active === "Logout" ? "bg-[#87CEFA]/40 text-black" : ""} rounded px-5 py-2 mb-10`}>
+        {
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.6663 16.6667H5.33301C4.22844 16.6667 3.33301 15.7713 3.33301 14.6667L3.33301 5.33341C3.33301 4.22884 4.22844 3.33342 5.33301 3.33342H11.6663M8.33301 10.0001H17.4997M17.4997 10.0001L14.9997 12.5001M17.4997 10.0001L14.9997 7.50008" stroke="#121212" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        }
+        <p className="hidden lg:block text-black">Logout</p>
+      </div>
     </div>
   )
 }

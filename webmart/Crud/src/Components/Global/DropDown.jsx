@@ -1,36 +1,47 @@
 import React, { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
-const StatusDropdown = ({ option, handlefilter ,command}) => {
+const StatusDropdown = ({ option, handlefilter, command, initalvalue, classprop }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState(option[0]?.label || "Status");
+
+  
+
+  // useEffect(() => {
+  //   setSelectedStatus(initalvalue);
+  // }, [initalvalue]);
 
   const handleSelect = (status) => {
-    setSelectedStatus(status.label);
-    setIsOpen(false);
+   
+   
 
-    // 🔁 Mimic onChange behavior like a <select>
+    setIsOpen(false);
     handlefilter(status.value);
+    
   };
 
   return (
     <div className="relative inline-block text-left w-full">
-      <div className='w-full'>
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="inline-flex justify-between w-full rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={twMerge(
+          "inline-flex justify-between w-full rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50",
+          classprop
+        )}
+      >
+        
+        {initalvalue}
+        <svg
+          className="ml-2 -mr-1 h-5 w-5"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
-          {selectedStatus}
-          <svg
-            className="ml-2 -mr-1 h-5 w-5"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-      </div>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
 
       {isOpen && (
         <div className="absolute z-10 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-[#ABABAB] ring-opacity-5">

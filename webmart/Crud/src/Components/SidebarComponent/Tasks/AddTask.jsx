@@ -12,14 +12,14 @@ import ApiClient from '../../ApiClient/ApiClient';
 export default function AddTask({ onClose }) {
     const [form, setFormData] = useState({
         title: '',
-        status: '',
+        status: 'Pending',
         desctiption: ''
     })
 
     const handleClear = () => {
         setFormData({
             title: '',
-            status: '',
+            status: 'Pending',
             desctiption: '',
             description: ''
         });
@@ -29,12 +29,17 @@ export default function AddTask({ onClose }) {
     const handleSubmit = async () => {
         console.log(form)
         const res = await ApiClient.post('/addtask', form)
-        console.log(res)
+        
         if (res.data.success) {
-
+            
             onClose();
         }
     }
+    const statusOptions = [
+        { label: "Pending", value: "Pending" },
+        { label: "Ongoing", value: "Ongoing" },
+        { label: "Completed", value: "Completed" },
+    ]
 
     return (
         <div className="fixed inset-0 bg-[#ABABAB]/10 backdrop-blur-[3px] bg-opacity-40 flex items-center justify-center z-50 px-2 md:px-0">
@@ -53,14 +58,10 @@ export default function AddTask({ onClose }) {
                     Add Activity
                 </h1>
 
-
-
                 <p className='text-left text-[14px] font-semibold mb-2  mt-2'>Title </p>
                 <input typeof='text' value={form.title} className=' py-[5px] px-2 w-full border border-[#ABABAB] rounded-lg ' onChange={(e) => setFormData({ ...form, title: e.target.value })} />
                 <p className='text-left text-[14px] font-semibold mb-2  mt-2'>Status </p>
-                <input typeof='text' value={form.status} className=' py-[5px] px-2 w-full border border-[#ABABAB] rounded-lg ' onChange={(e) => setFormData({ ...form, status: e.target.value })} />
-
-
+                <StatusDropdown option={statusOptions} initalvalue={form.status} handlefilter={(e) => setFormData({ ...form, status: e })} />
                 <p className='text-left text-[14px] font-semibold mb-2  mt-2'>Description </p>
                 <textarea typeof='text' value={form.description} className="h-[220px] w-full border border-[#ABABAB] rounded-lg px-2 py-[5px] text-start align-top overflow-auto focus:outline-none" onChange={(e) => setFormData({ ...form, description: e.target.value })} />
 

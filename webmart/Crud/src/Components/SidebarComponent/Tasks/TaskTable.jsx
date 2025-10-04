@@ -1,11 +1,36 @@
 import React from 'react'
-import  {customers}  from './shared'
+import StatusDropdown from '../../Global/DropDown';
 
-const TaskTable = () => {
+const TaskTable = ({ tasks, handlefilter,count }) => {
 
-    const data = customers
-   return (
-    <div className="p-4 md:p-8">
+  const dropdownoption = [
+    { label: "Pending", value: "Pending" },
+    { label: "Ongoing", value: "Ongoing" },
+    { label: "Completed", value: "Completed" },
+
+  ]
+
+  const filterOptions = [
+    {
+      label: "Newest", value: "Newest"
+
+    },
+    {
+      label: "Oldest", value: "Oldest"
+
+    }
+  ]
+
+
+  const handleStatusUpdate = (e) => {
+    handlefilter(e)
+  }
+
+
+
+
+  return (
+    <div className="p-4 md:p-4">
       <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
         <div>
           <h2 className="text-xl font-bold">All Customers</h2>
@@ -15,12 +40,10 @@ const TaskTable = () => {
           <input
             type="text"
             placeholder="Search"
-            className="px-3 py-2 border rounded-md text-sm w-full md:w-64"
+            className="px-3 py-2 bg-[#F9FBFF]  rounded-lg text-sm w-full md:w-64 shadow-b"
           />
-          <select className="px-3 py-2 border rounded-md text-sm">
-            <option>Newest</option>
-            <option>Oldest</option>
-          </select>
+          <StatusDropdown option={filterOptions} initalvalue={filterOptions[0].label} classprop={"px-3 py-2 bg-[#F9FBFF] rounded-md text-sm border-0 shadow-none"} />
+
         </div>
       </div>
 
@@ -28,41 +51,78 @@ const TaskTable = () => {
         <table className="min-w-full border rounded-md overflow-hidden">
           <thead className=" text-[#B5B7C0] text-sm">
             <tr>
-              <th className="text-left px-4 py-2">Customer Name</th>
-              <th className="text-left px-4 py-2">Company</th>
-              <th className="text-left px-4 py-2">Phone Number</th>
-              <th className="text-left px-4 py-2">Email</th>
-              <th className="text-left px-4 py-2">Country</th>
+              <th className="text-left px-4 py-2">Index</th>
+              <th className="text-left px-4 py-2">Name</th>
+
+              <th className="text-left px-4 py-2">Created</th>
+              <th className="text-left px-4 py-2">Description</th>
+
               <th className="text-left px-4 py-2">Status</th>
             </tr>
           </thead>
           <tbody className="text-sm text-gray-800">
-            {data.map((customer, index) => (
+            {console.log(tasks)}
+            {tasks && tasks.length > 0 && tasks.map((task, index) => (
               <tr
                 key={index}
                 className="border-t border-[#EEEEEE] hover:bg-gray-50 transition py-2 font-semibold"
               >
-                <td className="px-4 py-3">{customer.name}</td>
-                <td className="px-4 py-3">{customer.company}</td>
-                <td className="px-4 py-3">{customer.phone}</td>
-                <td className="px-4 py-3">{customer.email}</td>
-                <td className="px-4 py-3">{customer.country}</td>
+                <td className="px-4 py-3">{index + 1}</td>
+                <td className="px-4 py-3">{task.title}</td>
+                <td className="px-4 py-3">{new Date(task.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' })}</td>
+                <td className="px-4 py-3">{task.description}</td>
+
                 <td className="px-4 py-3 ">
-                  <div className={`px-2 py-1 rounded w-[80px]  items-center text-center  text-xs font-medium ${
-                    customer.status === "Active"
-                      ? "bg-[#16C098]/40 text-[#008767] border-[#00B087] border-1"
-                      : "bg-[#FFC5C5] text-[#DF0404] border-[#DF0404] border-1"
-                  }`}>
-                    {customer.status}
-                  </div>
+
+
+                  <StatusDropdown option={dropdownoption} initalvalue={task.status} handlefilter={(e) => handleStatusUpdate(e)} classprop={`px-2 py-1  w-[100px]  items-center text-center rounded-sm  text-xs font-medium ${task.status === "Completed"
+                    ? "bg-[#16C098]/40 text-[#008767] border-[#00B087] border-1"
+                    : task.status === "Pending"
+                      ? "bg-[#FFC5C5] text-[#DF0404] border-[#DF0404] border-1"
+                      : task.status === "Ongoing" || task.status === "Started"
+                        ? "bg-[#EEEEEE] text-[#ABABAB] border-[#ABABAB] border-1"
+                        : ""
+                    }`} />
+
+
+                </td>
+                <td className="px-4 py-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                    onClick={() => handlefilter(task)}
+                    aria-hidden="true"
+                    className="transition-all duration-200 ease-in-out text-gray-600 hover:text-red-600 hover:scale-110 cursor-pointer"
+                  >
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                  </svg>
+
+
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <div className="w-full flex flex-col sm:flex-row justify-between items-center gap-4 py-2 px-2   ">
+          {/* Left summary */}
+          <div className="text-sm text-gray-400 whitespace-nowrap ">
+            Showing data {(1 - 1) * 8 + 1} to {Math.min(1 * 7, 256000)} of {count} entries
+          </div>
+
+
+
+
+
+
+
+
+        </div>
       </div>
     </div>
   );
 }
 
-export default TaskTable
+export default React.memo(TaskTable)

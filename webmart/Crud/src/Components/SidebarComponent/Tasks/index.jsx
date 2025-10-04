@@ -9,13 +9,12 @@ import TaskTable from './TaskTable';
 const index = () => {
     const [tasks, setTask] = useState([])
     const [showModal, setShowModal] = useState(false);
+    const [count, setCount] = useState(0)
 
 
     useEffect(() => {
         getExpenses()
-    }, [showModal])
-
-
+    }, [])
 
 
     // to get all Expenses List
@@ -23,6 +22,7 @@ const index = () => {
         try {
             const res = await ApiClient.get("/getalltask");
             setTask(res.data.data);
+            setCount(res.data.count)
             console.log("Activityy:", res.data.data);
 
 
@@ -31,24 +31,34 @@ const index = () => {
         }
     };
 
-    //to get the Date Data in Desired Format
+
+    const deletetask = async (e) => {
+        try {
+            console.log(e)
+            const res = await ApiClient.delete("/deletetask", { data: { id: e._id } }).then(() => { getExpenses() }).catch((err) => console.log(err))
+
+        } catch (err) {
+            console.error("Error in Deleteing expenses:", err);
+        }
+
+    }
 
     return (
         <div className="h-screen  flex  flex-col lg:flex-row bg-[#f8f9fb] p-2 sm:p-4 md:p-6 ">
 
             {/* Left - Main Content */}
-            <div className="w-full lg:w-[70%]  rounded-2xl  shadow-b-md flex  flex-col gap-8">
+            <div className="w-full lg:w-[70%]  rounded-2xl  shadow-b-md flex  flex-col gap-5">
                 {/* Header */}
-                <div className="flex flex-col bg-white rounded-[30px] sm:flex-row sm:items-center sm:justify-between gap-2  p-4 sm:px-20 md:px-[80px] lg:px-[120px]">
+                <div className="flex  bg-white rounded-[20px] sm:rounded-[30px] sm:flex-row sm:items-center justify-between gap-2  p-4 sm:px-8">
                     <div>
                         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800">Tasks</h1>
                         <p className="text-xs sm:text-sm text-gray-500 mt-1">01 – 25 March, 2020</p>
                     </div>
-                    <div className="mt-4 sm:mt-0 flex items-center space-x-2">
+                    <div className="sm:mt-4 sm:mt-0 flex  space-x-2">
                         {/* Avatars */}
-                        {[1, 2, 3].map((_, i) => (
+                        {/* {[1, 2, 3].map((_, i) => (
                             <div key={i} className="w-8 h-8 bg-gray-300 rounded-full border-2 border-white -ml-2" />
-                        ))}
+                        ))} */}
                         <button onClick={() => setShowModal(true)} className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold">+ </button>
                     </div>
 
@@ -80,7 +90,8 @@ const index = () => {
     </div>
 ))} 
 */}
-                 <TaskTable />
+
+                    {tasks && tasks.length > 0 && <TaskTable tasks={tasks} handlefilter={deletetask} count={count} />}
 
                 </div>
 
@@ -108,9 +119,12 @@ const index = () => {
                 </div>
             </div>
             {
-                showModal && <AddTask isOpen={showModal} onClose={() => setShowModal(false)} />
+                showModal && <AddTask isOpen={showModal} onClose={() => {
+                    setShowModal(false);
+                    getExpenses()
+                }} />
             }
-           
+
         </div>
     )
 }

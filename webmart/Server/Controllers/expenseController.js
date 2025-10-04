@@ -4,11 +4,11 @@ const SubCategory = require('../Models/subCategory');
 
 exports.addExpense = async (req, res) => {
     try {
-        const {  amount, category, subcategory, check, description } = req.body;
+        const { amount, category, subcategory, check, description } = req.body;
 
         // Save to DB (await required)
         const newExpense = await expense.create({
-          
+
             amount,
             category,
             subcategory,
@@ -17,7 +17,7 @@ exports.addExpense = async (req, res) => {
 
         });
 
-        
+
         res.status(201).json({
             success: true,
             message: 'Expense added successfully',
@@ -25,7 +25,7 @@ exports.addExpense = async (req, res) => {
         });
 
     } catch (err) {
-       
+
         res.status(400).json({
             success: false,
             message: `Error in Adding Expense: ${err.message}`
@@ -39,7 +39,7 @@ exports.getAllExpense = async (req, res) => {
         grouped = {}
         allExpenselist.forEach(exp => {
             const date = new Date(exp.createdAt);
-           const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+            const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
             if (!grouped[key]) {
                 grouped[key] = [];
@@ -63,25 +63,35 @@ exports.getAllExpense = async (req, res) => {
     }
 }
 
-exports.getAllbysubCat = async (req, res) => {
+exports.getexpensebycategory = async (req, res) => {
     try {
-        const allexpense = await expense.find().sort({ createdAt: -1 })
+        const now = new Date();
+        const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const firstDayOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+
+        const allexpense = await expense.find({
+            createdAt: {
+                $gte: firstDayOfMonth,
+                $lt: firstDayOfNextMonth
+            }
+        }).sort({ createdAt: -1 });
+        console.log(allexpense)
         var grouped = {}
         // grouping all Expenses by Sub Cat
-        
+
         allexpense.forEach((res) => {
-            if (res.category == "Friend") {
-                const key = res.subcategory
+            if (res.category != "Friend") {
+                const key = res.category
                 if (!grouped[key]) {
-                    grouped[key] = []
+                    grouped[key] = 0 
                 }
-                grouped[key].push(res)
+                grouped[key] += res.amount
 
             }
 
         })
-        
-        res.status(201).json({success : true, message : "Fetched All by SubCat Success" , data : grouped ,count: grouped.length})
+
+        res.status(201).json({ success: true, message: "Fetched All by SubCat Success", data: grouped, count: grouped.length })
 
 
 

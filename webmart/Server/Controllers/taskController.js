@@ -18,6 +18,24 @@ exports.addTask = async (req, res) => {
     }
 
 }
+exports.deleteTask = async (req, res) => {
+    try {
+        console.log(req.body,"body")
+        const {  id} = req.body;
+        const newTask = await task.findByIdAndDelete({_id : id })
+        res.status(201).json({
+            success: true,
+            message: 'Task Deleted successfully',
+            data: newTask
+        });
+
+
+
+    } catch (err) {
+        res.status(400).json({ success: false, message: `Error in Deleted Activity ${err}`, error: err })
+    }
+
+}
 exports.getTask = async (req, res) => {
     try {
         const days = 30;
@@ -27,7 +45,7 @@ exports.getTask = async (req, res) => {
             { createdAt: { $gte: fromDate } },
             { title : 1 , status :1 ,description: 1, createdAt: 1 } // projection → return only these fields
         )
-            .sort({ createdAt: -1 }) // recent first
+            .sort({ createdAt: -1 }).limit(7); // recent first
         const grouped = {}
         tasks.forEach(exp => {
             const date = new Date(exp.createdAt);
