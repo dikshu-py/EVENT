@@ -20,7 +20,7 @@ const StatusDropdown = ({ option, handlefilter, command, initalvalue, classprop 
   };
 
   return (
-    <div className="relative inline-block text-left w-full">
+    <div className="relative inline-block text-left w-full ">
 
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -44,7 +44,7 @@ const StatusDropdown = ({ option, handlefilter, command, initalvalue, classprop 
 
 
       {isOpen && (
-        <div className="absolute z-10 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-[#ABABAB] ring-opacity-5">
+        <div className="absolute  mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-[#ABABAB] ring-opacity-5 z-50">
           <div className="py-1">
             {option.map((status) => (
               <button

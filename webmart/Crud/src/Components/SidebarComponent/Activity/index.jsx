@@ -35,7 +35,7 @@ const index = () => {
 
 
     return (
-        <div className="h-screen  flex  flex-col lg:flex-row bg-[#f8f9fb] p-2 sm:p-4 md:p-6 ">
+        <div className="h-screen  flex  flex-col lg:flex-row bg-[#f8f9fb] p-2 sm:px-4 md:px-6 ">
             <div className="w-full  xl:w-[70%]   bg-white rounded-2xl p-8 sm:px-20 md:px-[80px] lg:px-[120px] shadow-md flex  flex-col ">
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 max-w-5xl">

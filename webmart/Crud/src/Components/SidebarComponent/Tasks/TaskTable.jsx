@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import StatusDropdown from '../../Global/DropDown';
 
-const TaskTable = ({ tasks, handlefilter,count }) => {
 
+const TaskTable = ({ tasks, handlefilter,count , filter , setFilter,handleStatus}) => {
+  console.log(tasks)
   const dropdownoption = [
     { label: "Pending", value: "Pending" },
     { label: "Ongoing", value: "Ongoing" },
@@ -22,15 +23,15 @@ const TaskTable = ({ tasks, handlefilter,count }) => {
   ]
 
 
-  const handleStatusUpdate = (e) => {
-    handlefilter(e)
+  const handleStatusUpdate = (task,e) => {
+    
+    handleStatus({...task, status : e})
   }
-
-
-
+ 
+ 
 
   return (
-    <div className="p-4 md:p-4">
+    <div className="pt-2  px-4 md:px-4 flex flex-col h-full  justify-between">
       <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
         <div>
           <h2 className="text-xl font-bold">All Customers</h2>
@@ -40,15 +41,16 @@ const TaskTable = ({ tasks, handlefilter,count }) => {
           <input
             type="text"
             placeholder="Search"
+            onChange={(e)=>setFilter((prev)=>({...prev,search:e.target.value}))}
             className="px-3 py-2 bg-[#F9FBFF]  rounded-lg text-sm w-full md:w-64 shadow-b"
           />
-          <StatusDropdown option={filterOptions} initalvalue={filterOptions[0].label} classprop={"px-3 py-2 bg-[#F9FBFF] rounded-md text-sm border-0 shadow-none"} />
+          <StatusDropdown option={filterOptions} initalvalue={filter.order} handlefilter={(e)=>setFilter((prev)=> ({...prev ,order: e}))} classprop={"px-3 py-2 bg-[#F9FBFF] rounded-md text-sm border-0 shadow-none"} />
 
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full border rounded-md overflow-hidden">
+      <div className="overflow-x-auto flex flex-col flex-1">
+        <table className="min-w-full  rounded-md overflow-hidden">
           <thead className=" text-[#B5B7C0] text-sm">
             <tr>
               <th className="text-left px-4 py-2">Index</th>
@@ -75,7 +77,7 @@ const TaskTable = ({ tasks, handlefilter,count }) => {
                 <td className="px-4 py-3 ">
 
 
-                  <StatusDropdown option={dropdownoption} initalvalue={task.status} handlefilter={(e) => handleStatusUpdate(e)} classprop={`px-2 py-1  w-[100px]  items-center text-center rounded-sm  text-xs font-medium ${task.status === "Completed"
+                  <StatusDropdown option={dropdownoption} initalvalue={task.status} handlefilter={(e) => handleStatusUpdate(task,e)} classprop={`px-2 py-1  w-[100px]  items-center text-center rounded-sm  text-xs font-medium ${task.status === "Completed"
                     ? "bg-[#16C098]/40 text-[#008767] border-[#00B087] border-1"
                     : task.status === "Pending"
                       ? "bg-[#FFC5C5] text-[#DF0404] border-[#DF0404] border-1"
@@ -106,10 +108,12 @@ const TaskTable = ({ tasks, handlefilter,count }) => {
             ))}
           </tbody>
         </table>
-        <div className="w-full flex flex-col sm:flex-row justify-between items-center gap-4 py-2 px-2   ">
+        
+      </div>
+      <div className="w-full flex flex-col sm:flex-row justify-between items-center gap-4 py-2 px-2   ">
           {/* Left summary */}
           <div className="text-sm text-gray-400 whitespace-nowrap ">
-            Showing data {(1 - 1) * 8 + 1} to {Math.min(1 * 7, 256000)} of {count} entries
+            Showing data {(1 - 1) * 8 + 1} to {Math.min(1 * 8, 256000)} of {count} entries
           </div>
 
 
@@ -120,7 +124,6 @@ const TaskTable = ({ tasks, handlefilter,count }) => {
 
 
         </div>
-      </div>
     </div>
   );
 }

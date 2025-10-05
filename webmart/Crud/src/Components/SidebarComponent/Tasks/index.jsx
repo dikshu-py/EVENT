@@ -5,22 +5,40 @@ import ApiClient from '../../ApiClient/ApiClient';
 import getFormatedDate from '../../Global/FormatedDate';
 import getdayDate from '../../Global/Daydate';
 import TaskTable from './TaskTable';
+import getTodayDate from '../../Global/TodayDate';
+
 
 const index = () => {
     const [tasks, setTask] = useState([])
     const [showModal, setShowModal] = useState(false);
     const [count, setCount] = useState(0)
+    const [totalPages, setTotalPages] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const limit = 8
+    //for the Search and Filter by date options 
+    const [filter, setFilter] = useState({
+        search: '',
+        order: "Newest"
+    })
 
 
     useEffect(() => {
         getExpenses()
-    }, [])
+    }, [filter.search, filter.order])
 
 
     // to get all Expenses List
     const getExpenses = async () => {
         try {
-            const res = await ApiClient.get("/getalltask");
+            const res = await ApiClient.get("/getalltask", {
+                params: {
+                    search: filter.search.trim(),
+                    order: filter.order,
+                    page: currentPage,
+                    limit: limit,
+                }
+            });
+            console.log(res.data)
             setTask(res.data.data);
             setCount(res.data.count)
             console.log("Activityy:", res.data.data);
@@ -42,23 +60,36 @@ const index = () => {
         }
 
     }
+    const updateStatus = async (e)=>{
+        
+        try{
+            const res =  ApiClient.put('/updatetask', {tasks : e}).then(() => { getExpenses() }).catch((err) => console.log(`error in Put request ${err.message} `, err.message))
+
+        }catch(err){
+            console.error("Error in Updating expenses:", err);
+        }
+    }
+
 
     return (
-        <div className="h-screen  flex  flex-col lg:flex-row bg-[#f8f9fb] p-2 sm:p-4 md:p-6 ">
+        <div className="h-screen  flex  flex-col xl:flex-row bg-[#f8f9fb] p-2 sm:px-4 md:px-6 ">
 
             {/* Left - Main Content */}
-            <div className="w-full lg:w-[70%]  rounded-2xl  shadow-b-md flex  flex-col gap-5">
+            <div className="w-full xl:w-[70%]  rounded-2xl   flex  flex-col gap-5"
+                style={{
+                    boxShadow: '0 8px 8px -4px rgba(0,0,0,0.15), 0 4px 6px -4px rgba(0,0,0,0.1)'
+                }}>
                 {/* Header */}
                 <div className="flex  bg-white rounded-[20px] sm:rounded-[30px] sm:flex-row sm:items-center justify-between gap-2  p-4 sm:px-8">
                     <div>
                         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800">Tasks</h1>
-                        <p className="text-xs sm:text-sm text-gray-500 mt-1">01 – 25 March, 2020</p>
+                        <p className="text-xs sm:text-sm text-gray-500 mt-1">01 – {getTodayDate()}</p>
                     </div>
                     <div className="sm:mt-4 sm:mt-0 flex  space-x-2">
                         {/* Avatars */}
-                        {/* {[1, 2, 3].map((_, i) => (
-                            <div key={i} className="w-8 h-8 bg-gray-300 rounded-full border-2 border-white -ml-2" />
-                        ))} */}
+                        {[1, 2, 3].map((_, i) => (
+                            <div key={i} className="hidden sm:block w-8 h-8 bg-gray-300 rounded-full border-2 border-white -ml-2" />
+                        ))}
                         <button onClick={() => setShowModal(true)} className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold">+ </button>
                     </div>
 
@@ -70,28 +101,9 @@ const index = () => {
 
                 {/* Transaction List */}
                 <div className='flex-1 overflow-y-auto bg-white rounded-[30px] '>
-                    {/* 
-{tasks && Object.values(tasks).map((item) => (
-    <div key={item._id} className="mt-6">
-        <h3 className="text-xs sm:text-[18px] text-[#273240] font-bold mb-2 border-b py-2 border-[#DEDEDE]">{getFormatedDate(date)}</h3>
-        <div className="space-y-4 mt-6 overflow-auto">
-            {console.log(item)}
-            <div key={item._id} className="flex items-start justify-between">
-                <div className="flex items-start gap-4">
-                    <img src='https://cdn-icons-png.flaticon.com/512/906/906334.png' className="w-10 h-10 rounded-full" alt='logo' />
-                    <div>
-                        <p className="font-semibold text-[#273240] md:text-xl text-base">{item.title}</p>
-                        <p className="text-xs sm:text-sm text-[#273240] break-words">{item.status}  •  {item.description}</p>
-                    </div>
-                </div>
-                <p>{getdayDate(getFormatedDate(item.createdAt))}</p>
-            </div>
-        </div>
-    </div>
-))} 
-*/}
 
-                    {tasks && tasks.length > 0 && <TaskTable tasks={tasks} handlefilter={deletetask} count={count} />}
+
+                    {tasks && <TaskTable tasks={tasks} handleStatus={(e)=> updateStatus(e)}   handlefilter={deletetask} count={count} filter={filter} setFilter={setFilter} />}
 
                 </div>
 
