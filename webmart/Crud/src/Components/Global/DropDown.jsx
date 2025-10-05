@@ -20,7 +20,7 @@ const StatusDropdown = ({ option, handlefilter, command, initalvalue, classprop 
   };
 
   return (
-    <div className="relative inline-block text-left w-full ">
+    <div className="relative inline-block text-left w-full  ">
 
       <button
         onClick={() => setIsOpen(!isOpen)}

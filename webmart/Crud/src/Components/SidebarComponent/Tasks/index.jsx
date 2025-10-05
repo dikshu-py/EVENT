@@ -72,7 +72,7 @@ const index = () => {
 
 
     return (
-        <div className="h-screen  flex  flex-col xl:flex-row bg-[#f8f9fb] p-2 sm:px-4 md:px-6 ">
+        <div className="min-h-screen  flex  flex-col xl:flex-row gap-4 xl:gap-0 bg-[#f8f9fb] p-2 sm:px-4 md:px-6 ">
 
             {/* Left - Main Content */}
             <div className="w-full xl:w-[70%]  rounded-2xl   flex  flex-col gap-5"

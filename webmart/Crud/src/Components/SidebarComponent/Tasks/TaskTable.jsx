@@ -50,7 +50,7 @@ const TaskTable = ({ tasks, handlefilter,count , filter , setFilter,handleStatus
       </div>
 
       <div className="overflow-x-auto flex flex-col flex-1">
-        <table className="min-w-full  rounded-md overflow-hidden">
+        <table className="min-w-full max-h-full  rounded-md overflow-visible">
           <thead className=" text-[#B5B7C0] text-sm">
             <tr>
               <th className="text-left px-4 py-2">Index</th>
@@ -113,7 +113,7 @@ const TaskTable = ({ tasks, handlefilter,count , filter , setFilter,handleStatus
       <div className="w-full flex flex-col sm:flex-row justify-between items-center gap-4 py-2 px-2   ">
           {/* Left summary */}
           <div className="text-sm text-gray-400 whitespace-nowrap ">
-            Showing data {(1 - 1) * 8 + 1} to {Math.min(1 * 8, 256000)} of {count} entries
+            Showing data {(1 - 1) * 8 + 1} to {Math.min(count,1 * 8, 256000)} of {count} entries
           </div>
 
 
