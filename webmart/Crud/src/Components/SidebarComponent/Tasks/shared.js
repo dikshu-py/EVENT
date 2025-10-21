@@ -66,3 +66,10 @@ export const customers = [
 ];
 
 export const title="Tasks"
+
+export const  dropdownoption = [
+    { label: "Pending", value: "Pending" },
+    { label: "Ongoing", value: "Ongoing" },
+    { label: "Completed", value: "Completed" },
+
+  ]

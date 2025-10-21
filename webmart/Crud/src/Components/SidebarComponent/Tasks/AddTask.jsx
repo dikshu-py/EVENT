@@ -41,8 +41,10 @@ export default function AddTask({ onClose }) {
         { label: "Completed", value: "Completed" },
     ]
 
+    
+
     return (
-        <div className="fixed inset-0 bg-[#ABABAB]/10 backdrop-blur-[3px] bg-opacity-40 flex items-center justify-center z-50 px-2 md:px-0">
+        <div className="fixed inset-0 h-[700px] sm:h-full  bg-[#ABABAB]/10 backdrop-blur-[3px] bg-opacity-40 flex items-center justify-center z-50 px-2 md:px-0">
             <div className="relative w-full max-w-lg bg-white rounded-xl border border-purple-200 p-6 sm:p-8 shadow-md text-center ">
 
                 <button
@@ -63,7 +65,7 @@ export default function AddTask({ onClose }) {
                 <p className='text-left text-[14px] font-semibold mb-2  mt-2'>Status </p>
                 <StatusDropdown option={statusOptions} initalvalue={form.status} handlefilter={(e) => setFormData({ ...form, status: e })} />
                 <p className='text-left text-[14px] font-semibold mb-2  mt-2'>Description </p>
-                <textarea typeof='text' value={form.description} className="h-[220px] w-full border border-[#ABABAB] rounded-lg px-2 py-[5px] text-start align-top overflow-auto focus:outline-none" onChange={(e) => setFormData({ ...form, description: e.target.value })} />
+                <textarea typeof='text' value={form.description} className="h-[100px] sm:h-[220px] w-full border border-[#ABABAB] rounded-lg px-2 py-[5px] text-start align-top overflow-auto focus:outline-none" onChange={(e) => setFormData({ ...form, description: e.target.value })} />
 
                 {/* Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 justify-between mt-4">
@@ -82,7 +84,7 @@ export default function AddTask({ onClose }) {
                             : 'bg-gray-300 text-white cursor-not-allowed'
                             }`}
                     >
-                        Create Table
+                        Add Task
                     </button>
                 </div>
 
