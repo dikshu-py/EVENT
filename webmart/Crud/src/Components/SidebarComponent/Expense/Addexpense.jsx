@@ -64,7 +64,7 @@ export default function CSVImporter({ onClose }) {
      }
 
     return (
-        <div className="fixed inset-0 bg-[#ABABAB]/10 backdrop-blur-[3px] bg-opacity-40 flex items-center justify-center z-50 px-2 md:px-0">
+        <div className="fixed inset-0 h-[700px] sm:h-full  bg-[#ABABAB]/10 backdrop-blur-[3px] bg-opacity-40 flex items-center justify-center z-50 px-2 md:px-0">
             <div className="relative w-full max-w-md bg-white rounded-xl border border-purple-200 p-6 sm:p-8 shadow-md text-center ">
 
                 <button
@@ -81,21 +81,21 @@ export default function CSVImporter({ onClose }) {
                 </h1>
 
                 <p className='text-left text-[14px] font-semibold mb-2  mt-2'>Category</p>
-                <StatusDropdown option={CategoryOption} handlefilter={(e) => setFormData({ ...form, category: e })} />
+                <StatusDropdown option={CategoryOption} initalvalue={form.category}   handlefilter={(e) => setFormData({ ...form, category: e })} />
                 {
                     form.category == "Friend" &&
                     <div>
                         <p className='text-left text-[14px] font-semibold mb-2  mt-2'>SubCategory</p>
-                        <StatusDropdown option={subCategoryOption} handlefilter={(e) => setFormData({ ...form, subcategory: e })} />
+                        <StatusDropdown  initalvalue={form.subcategory} option={subCategoryOption} handlefilter={(e) => setFormData({ ...form, subcategory: e })} />
                     </div>
                 }
 
 
                 <p className='text-left text-[14px] font-semibold mb-2  mt-2'>Amount</p>
-                <input type='Number' value={form.amount} onChange={(e) => setFormData({ ...form, amount: e.target.value })} className=' py-[5px] px-2 w-full border border-[#ABABAB] rounded-lg ' />
+                <input type='Number' value={form.amount} onChange={(e) => setFormData({ ...form, amount: e.target.value })}   className=' py-[5px] px-2 w-full border border-[#ABABAB] rounded-lg ' />
 
                 <p className='text-left text-[14px] font-semibold mb-2  mt-2'>Type</p>
-                <StatusDropdown option={modeOption} handlefilter={(e) => setFormData({ ...form, check: e })} />
+                <StatusDropdown option={modeOption} handlefilter={(e) => setFormData({ ...form, check: e })}  initalvalue={form.check} />
                 <p className='text-left text-[14px] font-semibold mb-2  mt-2'>Description </p>
                 <textarea typeof='text' value={form.description} className="h-20 w-full border border-[#ABABAB] rounded-lg px-2 py-[5px] text-start align-top overflow-auto focus:outline-none" onChange={(e) => setFormData({ ...form, description: e.target.value })} />
 

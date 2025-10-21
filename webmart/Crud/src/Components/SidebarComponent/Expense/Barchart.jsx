@@ -19,14 +19,15 @@ const BarChart = ({ data }) => {
   const maxAmount = Math.max(...dailyTotals.map((item) => Math.abs(item.total)), 1) ;
 
   return (
-    <div className="flex items-end gap-1 h-40 ">
+    <div className="flex items-end gap-1 sm:h-40 ">
       {dailyTotals.map(({ date, total }) => {
         const heightPercent = Math.max((Math.abs(total) / maxAmount  ) * 100, 5); // min 5%
+        
 
         return (
-          <div key={date} className="flex flex-col justify-end items-center h-full w-6">
+          <div key={date} className="flex flex-col justify-end items-center h-[100px] sm:h-full w-8">
             <div
-              style={{ height: `${heightPercent/2}%` }}
+              style={{ height: `${heightPercent/1.1}%` }}
               className={`w-full rounded-sm transition-all duration-300   ${
                 total === maxAmount ? "bg-blue-500" : "bg-blue-300"
               }`}

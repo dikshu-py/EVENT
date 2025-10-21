@@ -13,7 +13,7 @@ const GroceryCard = ({ date, description }) => {
     };
 
     return (
-        <div className="max-w-3xl w-full bg-white flex justify-between  rounded-lg shadow-md p-4 hover:shadow-md transition ">
+        <div className="max-w-3xl w-full bg-white flex justify-between mx-auto rounded-lg shadow-md p-4 hover:shadow-md transition ">
             <div className="flex items-start space-x-4">
                 {/* Date Box */}
                 <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-md text-sm font-semibold text-gray-800">

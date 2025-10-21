@@ -6,6 +6,8 @@ import getFormatedDate from '../../Global/FormatedDate';
 import getdayDate from '../../Global/Daydate';
 import TaskTable from './TaskTable';
 import getTodayDate from '../../Global/TodayDate';
+import HeaderLayout from '../../Common/HeaderLayout';
+import { title } from './shared'
 
 
 const index = () => {
@@ -60,12 +62,12 @@ const index = () => {
         }
 
     }
-    const updateStatus = async (e)=>{
-        
-        try{
-            const res =  ApiClient.put('/updatetask', {tasks : e}).then(() => { getExpenses() }).catch((err) => console.log(`error in Put request ${err.message} `, err.message))
+    const updateStatus = async (e) => {
 
-        }catch(err){
+        try {
+            const res = ApiClient.put('/updatetask', { tasks: e }).then(() => { getExpenses() }).catch((err) => console.log(`error in Put request ${err.message} `, err.message))
+
+        } catch (err) {
             console.error("Error in Updating expenses:", err);
         }
     }
@@ -80,30 +82,17 @@ const index = () => {
                     boxShadow: '0 8px 8px -4px rgba(0,0,0,0.15), 0 4px 6px -4px rgba(0,0,0,0.1)'
                 }}>
                 {/* Header */}
-                <div className="flex  bg-white rounded-[20px] sm:rounded-[30px] sm:flex-row sm:items-center justify-between gap-2  p-4 sm:px-8">
-                    <div>
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800">Tasks</h1>
-                        <p className="text-xs sm:text-sm text-gray-500 mt-1">01 – {getTodayDate()}</p>
-                    </div>
-                    <div className="sm:mt-4 sm:mt-0 flex  space-x-2">
-                        {/* Avatars */}
-                        {[1, 2, 3].map((_, i) => (
-                            <div key={i} className="hidden sm:block w-8 h-8 bg-gray-300 rounded-full border-2 border-white -ml-2" />
-                        ))}
-                        <button onClick={() => setShowModal(true)} className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold">+ </button>
-                    </div>
-
-                </div>
+                <HeaderLayout title={title} setShowModal={setShowModal} />
 
 
 
 
 
                 {/* Transaction List */}
-                <div className='flex-1 overflow-y-auto bg-white rounded-[30px] '>
+                <div className='flex-1 overflow-y-auto bg-white rounded-[30px]'>
 
 
-                    {tasks && <TaskTable tasks={tasks} handleStatus={(e)=> updateStatus(e)}   handlefilter={deletetask} count={count} filter={filter} setFilter={setFilter} />}
+                    {tasks && <TaskTable tasks={tasks} handleStatus={(e) => updateStatus(e)} handlefilter={deletetask} count={count} filter={filter} setFilter={setFilter} />}
 
                 </div>
 

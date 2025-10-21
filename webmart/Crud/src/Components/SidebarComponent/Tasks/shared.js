@@ -64,3 +64,5 @@ export const customers = [
     status: "Inactive"
   }
 ];
+
+export const title="Tasks"

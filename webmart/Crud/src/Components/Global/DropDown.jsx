@@ -30,7 +30,7 @@ const StatusDropdown = ({ option, handlefilter, command, initalvalue, classprop 
         )}
       >
         
-        {initalvalue}
+        {initalvalue || "Select"}
         <svg
           className="ml-2 -mr-1 h-5 w-5"
           xmlns="http://www.w3.org/2000/svg"

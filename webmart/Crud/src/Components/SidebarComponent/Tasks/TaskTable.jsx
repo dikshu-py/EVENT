@@ -31,11 +31,11 @@ const TaskTable = ({ tasks, handlefilter,count , filter , setFilter,handleStatus
  
 
   return (
-    <div className="pt-2  px-4 md:px-4 flex flex-col h-full  justify-between">
-      <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
+    <div className="pt-2 px-4 md:px-4 flex flex-col h-full  justify-between">
+      <div className="flex items-center justify-between  flex-wrap gap-4">
         <div>
-          <h2 className="text-xl font-bold">All Customers</h2>
-          <a href="#" className="text-sm text-blue-500 hover:underline">Active Members</a>
+          <h2 className="text-xl font-bold ml-4">All Tasks</h2>
+          
         </div>
         <div className="flex gap-2">
           <input
@@ -60,6 +60,7 @@ const TaskTable = ({ tasks, handlefilter,count , filter , setFilter,handleStatus
               <th className="text-left px-4 py-2">Description</th>
 
               <th className="text-left px-4 py-2">Status</th>
+              <th className="text-left px-4 py-2">Action</th>
             </tr>
           </thead>
           <tbody className="text-sm text-gray-800">
@@ -67,14 +68,14 @@ const TaskTable = ({ tasks, handlefilter,count , filter , setFilter,handleStatus
             {tasks && tasks.length > 0 && tasks.map((task, index) => (
               <tr
                 key={index}
-                className="border-t border-[#EEEEEE] hover:bg-gray-50 transition py-2 font-semibold"
+                className="border-t border-[#EEEEEE] hover:bg-gray-50 transition  font-semibold"
               >
                 <td className="px-4 py-3">{index + 1}</td>
                 <td className="px-4 py-3">{task.title}</td>
                 <td className="px-4 py-3">{new Date(task.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' })}</td>
                 <td className="px-4 py-3">{task.description}</td>
 
-                <td className="px-4 py-3 ">
+                <td className="px-4  py-3">
 
 
                   <StatusDropdown option={dropdownoption} initalvalue={task.status} handlefilter={(e) => handleStatusUpdate(task,e)} classprop={`px-2 py-1  w-[100px]  items-center text-center rounded-sm  text-xs font-medium ${task.status === "Completed"
@@ -110,7 +111,7 @@ const TaskTable = ({ tasks, handlefilter,count , filter , setFilter,handleStatus
         </table>
         
       </div>
-      <div className="w-full flex flex-col sm:flex-row justify-between items-center gap-4 py-2 px-2   ">
+      <div className="w-full flex flex-col sm:flex-row justify-between items-center gap-4 pb-2 px-2   ">
           {/* Left summary */}
           <div className="text-sm text-gray-400 whitespace-nowrap ">
             Showing data {(1 - 1) * 8 + 1} to {Math.min(count,1 * 8, 256000)} of {count} entries
