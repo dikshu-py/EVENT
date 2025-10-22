@@ -10,9 +10,9 @@ const HeaderLayout = ({title,setShowModal}) => {
                     </div>
                     <div className="sm:mt-4 sm:mt-0 flex  space-x-2">
                         {/* Avatars */}
-                        {[1, 2, 3].map((_, i) => (
+                        {/* {[1, 2, 3].map((_, i) => (
                             <div key={i} className="hidden sm:block w-8 h-8 bg-gray-300 rounded-full border-2 border-white -ml-2" />
-                        ))}
+                        ))} */}
                         <button onClick={() => setShowModal(true)} className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold">+ </button>
                     </div>
 

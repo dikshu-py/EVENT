@@ -10,6 +10,7 @@ import HeaderLayout from "../../Common/HeaderLayout";
 import { title } from "./shared";
 import StatusDropdown from "../../Global/DropDown";
 import { dropdownoption } from "./shared";
+import WeeklyCalendar from "../../Common/DatesChannel";
 const index = () => {
   const [tasks, setTask] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -85,7 +86,7 @@ const index = () => {
       >
         {/* Header */}
         <HeaderLayout title={title} setShowModal={setShowModal} />
-
+        <WeeklyCalendar/>
         {/* Transaction List */}
         <div className="hidden sm:block flex-1 overflow-y-auto bg-white rounded-[30px]">
           {tasks && (
@@ -114,7 +115,7 @@ const index = () => {
                         task.status === "Completed"
                           ? "bg-[#16C098] "
                           : task.status === "Pending"
-                          ? "bg-[#FFC5C5] "
+                          ? "bg-red-600 "
                           : task.status === "Ongoing" ||
                             task.status === "Started"
                           ? "bg-[#EEEEEE] "
@@ -149,8 +150,14 @@ const index = () => {
                 </div>
               </div>
             ))}
+           
         </div>
+         
+        
       </div>
+      <div className="text-sm text-gray-400 block sm:hidden">
+            Showing data {(1 - 1) * 8 + 1} to {Math.min(count,1 * 8, 256000)} of {count} entries
+          </div>
 
       {/* Right - Sidebar */}
       <div className="w-full lg:w-[30%] flex flex-col gap-6 bg-[#F9FAFC] overflow-hidden">
